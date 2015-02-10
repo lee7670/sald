@@ -123,12 +123,18 @@ function rayCircle(r, c) {
  */
 function rayRectangle(r, b) {
 	var dir={x:r.end.x-r.start.x, y:r.end.y-r.start.y};
-    var t0x=
+    var t0x=(b.min.x-r.start.x)/dir.x;
+    var t1x=(b.max.x-r.start.x)/dir.x;
+    var t0y=(b.min.y-r.start.y)/dir.y;
+    var t0y=(b.max.y-r.start.y)/dir.y;
+    var t1=Math.sqrt(t0x*t0x+t0y*t0y);
+    var t2=Math.sqrt(t1x*t1x+t1y*t1y);
+    if(t1<t2&&t1>=0&&t1<=1) return t1;
+    if(t2<t1&&t2>=0&&t2<=1) return t2;
 	return null;
 }
 
-/* Rav vs Convex
- * INPUT: ray as above, convex polygon as above.
+/* Rav vs Convex * INPUT: ray as above, convex polygon as above.
  * RETURN VALUE:
  *  null if no intersection
  *  {t:} if intersection
